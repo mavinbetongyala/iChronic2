@@ -1,0 +1,47 @@
+{
+  "name": "iChronic2",
+  "version": "2.0.0",
+  "description": "Chronic Management Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/siteslave/iChronic2.git"
+  },
+  "keywords": [
+    "Electron",
+    "chronic",
+    "hdc",
+    "hosxp"
+  ],
+  "author": "Satit Rianpit",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/siteslave/iChronic2.git/issues"
+  },
+  "homepage": "https://github.com/siteslave/iChronic2.git#readme",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-watch": "^4.3.5"
+  },
+  "dependencies": {
+    "angular": "^1.5.5",
+    "angular-animate": "^1.5.5",
+    "angular-aria": "^1.5.5",
+    "angular-material": "^1.0.7",
+    "angular-material-data-table": "^0.10.7",
+    "angular-messages": "^1.5.5",
+    "angular-ui-router": "^0.2.18",
+    "highcharts": "^4.2.4",
+    "highcharts-ng": "0.0.11",
+    "knex": "^0.10.0",
+    "lodash": "^4.11.1",
+    "mysql": "^2.10.2"
+  }
+}

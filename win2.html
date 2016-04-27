@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./node_modules/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="./libs/iconfont/material-icons.css">
+    <title>Title</title>
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #e9eaed;
+        height: 100%;
+        overflow:hidden;
+      }
+      div.fixed {
+        position: fixed;
+        top: 0;
+        right: 5px;
+      }
+
+      div.hangup {
+        position: fixed;
+        bottom: 10px;
+        right: 420px;
+      }
+    </style>
+</head>
+<body>
+  <div layout="row">
+    <div fex>
+      <video id="remoteVideo" style="height: 630px; width: 840px;" autoplay="true"></video>
+    </div>
+  </div>
+
+  <div class="fixed">
+    <video id="localVideo" style="height: 180px; width: 200px;" autoplay="true"></video>
+  </div>
+
+  <div class="hangup">
+    <img src="./libs/img/hangup3.png" style="width: 40px; height: 40px;" alt="">
+  </div>
+    <script>
+      'use strict';
+      navigator.getUserMedia = navigator.webkitGetUserMedia;
+
+      let remoteVideo = document.getElementById('remoteVideo');
+      let localVideo = document.getElementById('localVideo');
+      // let constraints = { audio: false, video: {
+      //   mandatory: {
+      //     minWidth: 1280,
+      //     minHeight: 960
+      //   }
+      // }};
+
+      function successCallback(stream) {
+        window.stream = stream;
+
+        if (window.URL) {
+          remoteVideo.src = window.URL.createObjectURL(stream);
+          localVideo.src = window.URL.createObjectURL(stream);
+        } else {
+          remoteVideo.src = stream;
+          localVideo.src = stream;
+        }
+
+        remoteVideo.play();
+        localVideo.play();
+      }
+
+      function errorCallback(error) {
+        console.log('navigator.getUserMedia error: ', error);
+      }
+
+      navigator.getUserMedia({
+        video: {
+          mandatory: {
+            maxWidth: 640,
+            maxHeight: 480
+          }
+        }
+      }, successCallback, errorCallback);
+
+    </script>
+</body>
+</html>
