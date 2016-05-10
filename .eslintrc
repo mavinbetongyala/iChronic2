@@ -1,0 +1,16 @@
+{
+  "parserOptions": {
+    "sourceType": "script"
+  },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true,
+    "amd": true
+  },
+  "extends": "eslint:recommended",
+  "rules": {
+    "indent": ["error", 2, {"VariableDeclarator": 1}],
+    "no-unused-vars": ["error", { "vars": "local", "args": "after-used" }]
+  }
+}

@@ -2,7 +2,7 @@
 
 let ipcRenderer = require('electron').ipcRenderer;
 
-angular.module('app.controlers.Main', [])
+angular.module('app.controllers.Main', [])
   .controller('MainCtrl', ($scope) => {
 
   })

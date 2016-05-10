@@ -1,0 +1,123 @@
+<md-dialog aria-label="ข้อมูลการรับบริการ" ng-cloak style="width: 780px; max-width:800px; max-height:640px; ">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>ข้อมูลการรับบริการผู้ป่วยใน</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="การวินิจฉัยโรค" md-on-select="getServiceDiagnosisIpd()">
+          <md-content>
+            <md-table-container>
+              <table md-table>
+                <thead md-head>
+                <tr md-row>
+                  <th md-column>#</th>
+                  <th md-column>รหัส</th>
+                  <th md-column>รายการ</th>
+                  <th md-column>ประเภทวินิจฉัย</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="d in diags">
+                  <td md-cell>{{ $index + 1 }}</td>
+                  <td md-cell>{{ d.DIAGCODE }}</td>
+                  <td md-cell>{{ d.DIAGNAME }}</td>
+                  <td md-cell>{{ d.DIAGTYPE_NAME }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+          </md-content>
+        </md-tab>
+        <md-tab label="หัตถการ" md-on-select="getServiceProcedureIpd()">
+          <md-content class="md-padding">
+            <md-table-container>
+              <table md-table>
+                <thead md-head>
+                <tr md-row>
+                  <th md-column>#</th>
+                  <th md-column>รหัส</th>
+                  <th md-column>รายการ</th>
+                  <th md-column>เริ่ม</th>
+                  <th md-column>สิ้นสุด</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="p in procedures">
+                  <td md-cell>{{ $index + 1 }}</td>
+                  <td md-cell>{{ p.PROCEDCODE }}</td>
+                  <td md-cell>{{ p.PROCEDNAME }}</td>
+                  <td md-cell>{{ p.TIMESTART }}</td>
+                  <td md-cell>{{ p.TIMEFINISH }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+          </md-content>
+        </md-tab>
+        <md-tab label="ยาและเวชภัณฑ์" md-on-select="getServiceDrugIpd()">
+          <md-content class="md-padding">
+            <md-table-container>
+              <table md-table>
+                <thead md-head>
+                <tr md-row>
+                  <th md-column>#</th>
+                  <th md-column>วันที่จ่าย</th>
+                  <th md-column>รายการ</th>
+                  <th md-column>จำนวน</th>
+                  <th md-column>หน่วย</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="d in drugs">
+                  <td md-cell>{{ $index + 1 }}</td>
+                  <td md-cell>{{ d.DATESTART }}</td>
+                  <td md-cell>{{ d.DNAME }}</td>
+                  <td md-cell>{{ d.AMOUNT | number }}</td>
+                  <td md-cell>{{ d.UNIT_NAME }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+          </md-content>
+        </md-tab>
+        <md-tab label="ค่าใช้จ่าย" md-on-select="getServiceChargeIpd()">
+          <md-content class="md-padding">
+            <md-table-container>
+              <table md-table>
+                <thead md-head>
+                <tr md-row>
+                  <th md-column>#</th>
+                  <th md-column>รายการ</th>
+                  <th md-column>ราคา</th>
+                  <th md-column>สิทธิ์การรักษา</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="c in charges">
+                  <td md-cell>{{ $index + 1 }}</td>
+                  <td md-cell>{{ c.CHARGEITME_NAME }}</td>
+                  <td md-cell>{{ c.PRICE | number: .2 }}</td>
+                  <td md-cell>{{ c.INSTYPE_NAME }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-primary" ng-click="cancel()" >
+        ปิดหน้าต่าง
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

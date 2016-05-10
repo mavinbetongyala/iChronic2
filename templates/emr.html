@@ -1,25 +1,26 @@
 <div layout="column" style="height:615px" ng-cloak>
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <md-button class="md-icon-button" aria-label="Close" ng-click="goHome()">
-                <md-icon class="material-icons">keyboard_backspace</md-icon>
+          <md-button class="md-icon-button" aria-label="Close" ng-click="goHome()">
+            <md-icon class="material-icons">keyboard_backspace</md-icon>
+          </md-button>
+          <h3>
+              {{fullname}} อายุ {{age}} ปี
+          </h3>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="Close">
+            <md-icon class="material-icons">person_pin</md-icon>
+          </md-button>
+            <!--<md-button class="md-icon-button" aria-label="Close" ng-click="close()">
+                <md-icon class="material-icons">home</md-icon>
             </md-button>
-            <h3>
-                ประวัติการรับบริการ (EMR)
-            </h3>
-            <span flex></span>
-            <md-button class="md-icon-button" aria-label="Close">
-                <md-icon class="material-icons">person_pin</md-icon>
+            <md-button class="md-icon-button" aria-label="Close" ng-click="close()">
+                <md-icon class="material-icons">visibility</md-icon>
             </md-button>
-            <!--<md-button class="md-icon-button" aria-label="Close" ng-click="close()">-->
-                <!--<md-icon class="material-icons">home</md-icon>-->
-            <!--</md-button>-->
-            <!--<md-button class="md-icon-button" aria-label="Close" ng-click="close()">-->
-                <!--<md-icon class="material-icons">visibility</md-icon>-->
-            <!--</md-button>-->
-            <!--<md-button class="md-icon-button" aria-label="Close" ng-click="close()">-->
-                <!--<md-icon class="material-icons">colorize</md-icon>-->
-            <!--</md-button>-->
+            <md-button class="md-icon-button" aria-label="Close" ng-click="close()">
+                <md-icon class="material-icons">colorize</md-icon>
+            </md-button>-->
+            <!--
             <md-menu>
             <md-button class="md-icon-button" aria-label="Close" ng-click="openMenu($mdOpenMenu, $event)">
                 <md-icon class="material-icons">more_vert</md-icon>
@@ -31,12 +32,12 @@
                         ข้อมูลทั่วไป
                     </md-button>
                 </md-menu-item>
-                <!--<md-menu-item>-->
-                    <!--<md-button>-->
-                        <!--<md-icon class="material-icons" md-menu-align-target>person</md-icon>-->
-                        <!--Redial-->
-                    <!--</md-button>-->
-                <!--</md-menu-item>-->
+                <md-menu-item>
+                    <md-button>
+                        <md-icon class="material-icons" md-menu-align-target>person</md-icon>
+                        Redial
+                    </md-button>
+                </md-menu-item>
                 <md-menu-divider></md-menu-divider>
                 <md-menu-item>
                     <md-button>
@@ -57,94 +58,214 @@
                     </md-button>
                 </md-menu-item>
             </md-menu-content>
-                </md-menu>
-        </div>
+                </md-menu>-->
+      </div>
     </md-toolbar>
     <md-content flex>
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Dashboard">
-                <md-tab-label>
-                    <md-icon class="material-icons">poll</md-icon>
-                    Dashboard
-                </md-tab-label>
-                <md-tab-body>
-                    <div layout="column">
-                        <div>
-                            <highchart config="chartConfig"></highchart>
-                        </div>
-                        <div flex>
-                            <highchart config="chartConfig"></highchart>
-                        </div>
-                    </div>
-                </md-tab-body>
+              <md-tab-label>
+                <md-icon class="material-icons">poll</md-icon>
+                Dashboard
+              </md-tab-label>
+              <md-tab-body>
+                <div layout="column">
+                  <div flex layout-padding>
+                    <highchart config="chartConfigBP"></highchart>
+                  </div>
+                  <div flex layout-padding>
+                    <highchart config="chartConfigFBS"></highchart>
+                  </div>
+                  <div flex layout-padding>
+                    <highchart config="chartConfigTC"></highchart>
+                  </div>
+                  <div flex layout-padding>
+                    <highchart config="chartConfigGFR"></highchart>
+                  </div>
+                </div>
+              </md-tab-body>
 
             </md-tab>
-            <md-tab>
+            <md-tab md-on-select="getOpdService()">
+              <md-tab-label>
+                <md-icon class="material-icons">directions_walk</md-icon>
+                ผู้ป่วยนอก (OPD)
+              </md-tab-label>
+              <md-tab-body>
+                <md-content>
+                  <md-table-container>
+                    <table md-table>
+                      <thead md-head>
+                      <tr md-row>
+                        <th md-column>วันที่</th>
+                        <th md-column>เวลา</th>
+                        <th md-column>หน่วยบริการ</th>
+                        <th md-column>สิทธิ์การรักษา</th>
+                        <th md-column></th>
+                      </tr>
+                      </thead>
+                      <tbody md-body>
+                      <tr md-row ng-repeat="s in services">
+                        <td md-cell>{{ s.date }}</td>
+                        <td md-cell>{{ s.time }}</td>
+                        <td md-cell>{{ s.hospital }}</td>
+                        <td md-cell>{{ s.instype }}</td>
+                        <td md-cell>
+                          <md-button class="md-icon-button" aria-label="More" ng-click="getOpdEmr(s.hospcode, s.pid, s.seq, $event)">
+                            <md-icon class="material-icons">search</md-icon>
+                          </md-button>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </md-table-container>
+                </md-content>
+              </md-tab-body>
+
+            </md-tab>
+            <md-tab md-on-select="getIpdService()">
                 <md-tab-label>
-                    <md-icon class="material-icons">directions_walk</md-icon>
-                    ผู้ป่วยนอก (OPD)
+                  <md-icon class="material-icons">hotel</md-icon>
+                  ผู้ป่วยใน (IPD)
                 </md-tab-label>
                 <md-tab-body>
                     <md-content>
-                        <md-table-container> 
-                            <table md-table> 
-                                <thead md-head> 
-                                <tr md-row> 
-                                    <th md-column>วันที่</th>
-                                    <th md-column>เวลา</th>
-                                    <th md-column>หน่วยบริการ</th>
-                                    <th md-column>คลินิค</th>
-                                    <th md-column></th>ฃ
-                                </tr>
-                                </thead>
-                                <tbody md-body> 
-                                <tr md-row> 
-                                    <td md-cell>21/04/2559</td>
-                                    <td md-cell>11:50</td>
-                                    <td md-cell>รพ.สต.บ้านหนองอุ่ม (04958)</td>
-                                    <td md-cell>แผนกผู้ป่วยนอก</td>
-                                    <td md-cell>
-                                        <md-button class="md-icon-button" aria-label="More" ng-click="edit(c.id)">
-                                            <md-icon class="material-icons">search</md-icon>
-                                        </md-button>
-                                    </td>
-                                </tr>
-                                <tr md-row> 
-                                    <td md-cell>21/04/2559</td>
-                                    <td md-cell>11:50</td>
-                                    <td md-cell>รพ.สต.บ้านหนองอุ่ม (04958)</td>
-                                    <td md-cell>แผนกผู้ป่วยนอก</td>
-                                    <td md-cell>
-                                        <md-button class="md-icon-button" aria-label="More" ng-click="edit(c.id)">
-                                            <md-icon class="material-icons">search</md-icon>
-                                        </md-button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </md-table-container>
+                    <md-table-container>
+                          <table md-table>
+                            <thead md-head>
+                              <tr md-row>
+                                <th md-column>วันที่</th>
+                                <th md-column>เวลา</th>
+                                <th md-column>หน่วยบริการ</th>
+                                <!--<th md-column>สิทธิ์การรักษา</th>-->
+                                <th md-column>สถานะจำหน่าย</th>
+                                <th md-column></th>
+                              </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row ng-repeat="a in admission">
+                              <td md-cell>{{ a.date }}</td>
+                              <td md-cell>{{ a.time }}</td>
+                              <td md-cell>{{ a.hospital }}</td>
+                              <!--<td md-cell>{{ a.instype }}</td>-->
+                              <td md-cell>{{ a.dischtype_name }}</td>
+                              <td md-cell>
+                                <md-button class="md-icon-button" aria-label="More" ng-click="getIpdEmr(a.hospcode, a.pid, a.an, $event)">
+                                  <md-icon class="material-icons">search</md-icon>
+                                </md-button>
+                              </td>
+                            </tr>
+                            </tbody>
+                          </table>
+                        </md-table-container>    
                     </md-content>
                 </md-tab-body>
-
             </md-tab>
-            <md-tab>
+            
+            <md-tab md-on-select="getLab()">
                 <md-tab-label>
-                    <md-icon class="material-icons">hotel</md-icon>
-                    ผู้ป่วยใน (IPD)
+                  <md-icon class="material-icons">cloud</md-icon>
+                  ผลตรวจ LAB
                 </md-tab-label>
                 <md-tab-body>
-                    Lorem
+                  <md-content>
+                    <md-table-container>
+                      <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                          <th md-column>วันที่</th>
+                          <th md-column>หน่วยบริการ</th>
+                          <th md-column></th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                          <tr md-row ng-repeat="l in labs">
+                            <td md-cell>{{ l.date }}</td>
+                            <td md-cell>{{ l.hospital }}</td>
+                            <td md-cell>
+                              <md-button class="md-icon-button" aria-label="More" ng-click="getLabFu(l.hospcode, l.pid, l.seq)">
+                                <md-icon class="material-icons">search</md-icon>
+                              </md-button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </md-table-container>    
+                  </md-content>
                 </md-tab-body>
             </md-tab>
             <md-tab>
                 <md-tab-label>
-                    <md-icon class="material-icons">cloud</md-icon>
-                    cloud emr
+                  <md-icon class="material-icons">cloud</md-icon>
+                  ตรวจคัดกรอง
                 </md-tab-label>
                 <md-tab-body>
-                    Lorem
+                  <md-content>
+                    <md-table-container>
+                      <table md-table>
+                        <thead md-head>
+                        <tr md-row>
+                          <th md-column>วันที่</th>
+                          <th md-column>หน่วยบริการ</th>
+                          <th md-column>ตรวจตา</th>
+                          <th md-column>ตรวจเท้า</th>
+                          <!--<th md-column></th>-->
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="c in chronicfu">
+                          <td md-cell>{{ c.date }}</td>
+                          <td md-cell>{{ c.hospital }}</td>
+                          <td md-cell>{{ c.retina }}</td>
+                          <td md-cell>{{ c.foot }}</td>
+                          <!--<td md-cell>-->
+                            <!--<md-button class="md-icon-button" aria-label="More" ng-click="edit(c.id)">-->
+                              <!--<md-icon class="material-icons">search</md-icon>-->
+                            <!--</md-button>-->
+                          <!--</td>-->
+                        </tr>
+                        </tbody>
+                      </table>
+                    </md-table-container>    
+                  </md-content>
                 </md-tab-body>
             </md-tab>
+            
+            <md-tab md-on-select="getCommunityService()">
+                <md-tab-label>
+                  <md-icon class="material-icons">cloud</md-icon>
+                  เยี่ยมบ้าน
+                </md-tab-label>
+                <md-tab-body>
+                  <md-content>
+                    <md-table-container>
+                      <table md-table>
+                        <thead md-head>
+                          <tr md-row>
+                            <th md-column>วันที่</th>
+                            <th md-column>หน่วยบริการ</th>
+                            <th md-column>กิจกรรม</th>
+                            <!--<th md-column></th>-->
+                          </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="cs in community_services">
+                          <td md-cell>{{ cs.date }}</td>
+                          <td md-cell>{{ cs.hospital }}</td>
+                          <td md-cell>{{ cs.comservice }}</td>
+                          <!--<td md-cell>-->
+                            <!--<md-button class="md-icon-button" aria-label="More" ng-click="edit(c.id)">-->
+                              <!--<md-icon class="material-icons">search</md-icon>-->
+                            <!--</md-button>-->
+                          <!--</td>-->
+                        </tr>
+                        </tbody>
+                      </table>
+                    </md-table-container>    
+                  </md-content>
+                </md-tab-body>
+            </md-tab>
+           
         </md-tabs>
     </md-content>
 </div>

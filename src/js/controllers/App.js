@@ -1,16 +1,18 @@
 'use strict';
 
+/* global angular */
+
 angular.module('app.controllers.App', ['app.services.Person'])
 .controller('AppCtrl', ($scope, $timeout, $mdSidenav, $log, $state, PersonService, Connection) => {
-  
+
   let db = Connection.getHISConnection();
   $scope.person = [];
   // hide loading
   $scope.loading = false;
-  
+
   $scope.toggleLeft = buildDelayedToggler('left');
   $scope.toggleRight = buildToggler('right');
-    
+
   $scope.isOpenRight = function(){
     return $mdSidenav('right').isOpen();
   };
@@ -18,7 +20,7 @@ angular.module('app.controllers.App', ['app.services.Person'])
   $scope.toggleSearch = () => {
     $scope.showSearch = !$scope.showSearch;
     $scope.$apply();
-  }
+  };
 
   let getChronic = () => {
     // show loading
@@ -29,9 +31,9 @@ angular.module('app.controllers.App', ['app.services.Person'])
         // hide loading
         $scope.loading = false;
       }, err => {
-        $log.error(err)
+        $log.error(err);
       });
-  }
+  };
 
   getChronic();
 
@@ -41,9 +43,9 @@ angular.module('app.controllers.App', ['app.services.Person'])
       if ($scope.query) {
         // show loading
         $scope.loading = true;
-        
+
         $scope.person = [];
-      
+
         if (isNaN($scope.query)) {
           // string query
           let _query = $scope.query.split(" ");
@@ -51,7 +53,7 @@ angular.module('app.controllers.App', ['app.services.Person'])
             // search by fullname
             PersonService.searchChronicByFullname(db, _query[0], _query[1])
               .then(rows => $scope.person = rows);
-            // hide loading  
+            // hide loading
             $scope.loading = false;
           } else {
             // search by fname
@@ -72,17 +74,18 @@ angular.module('app.controllers.App', ['app.services.Person'])
       }
     }
   };
-  
+
   $scope.go = (state) => {
     $state.go(state);
-  }
-  
-  
+  };
+
+
   function debounce(func, wait) {
     var timer;
     return function debounced() {
       var context = $scope,
-      args = Array.prototype.slice.call(arguments);
+        args = Array.prototype.slice.call(arguments);
+
       $timeout.cancel(timer);
       timer = $timeout(function() {
         timer = undefined;
@@ -100,7 +103,7 @@ angular.module('app.controllers.App', ['app.services.Person'])
       });
     }, 200);
   }
-  
+
   function buildToggler(navID) {
     return function() {
       // Component lookup should always be available since we are not using `ng-if`
@@ -109,6 +112,6 @@ angular.module('app.controllers.App', ['app.services.Person'])
       .then(function () {
         $log.debug("toggle " + navID + " is done");
       });
-    }
+    };
   }
-})
+});

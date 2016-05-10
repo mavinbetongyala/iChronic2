@@ -16,6 +16,9 @@ angular.module('app.config.Connection', [])
             charset: 'utf8'
           }
         })
+      },
+      getCloudUrl() {
+        return 'http://localhost:3000'
       }
     }
   });

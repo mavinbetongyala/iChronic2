@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./libs/iconfont/material-icons.css">
     <link rel="stylesheet" href="./node_modules/angular-material-data-table/dist/md-data-table.css">
     <link rel="stylesheet" href="./dist/css/style.css">
-    <title>Hello World!</title>
+    <title>iChronic 2</title>
   </head>
   <body>
 
@@ -55,14 +55,15 @@
       </md-toolbar>
 
       <md-content style="height: 552px;">
+      <!--<md-content>-->
         <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
         <md-input-container  md-no-float class="md-block" style="margin:15px 2px 0 2px; padding: 0;">
           <input placeholder="ค้นหา" ng-model="query" ng-keypress="search($event)">
         </md-input-container>
-        
+
         <md-subheader class="md-no-sticky">แสดง {{ person.length | number }} เรคคอร์ด</md-subheader>
         <md-list>
-          <md-list-item class="md-2-line" ng-repeat="p in person" ng-click="go('emr')">
+          <md-list-item class="md-2-line" ng-repeat="p in person" href="#/emr/{{ p.cid }}">
             <img src="./libs/img/avatar-man.png" class="md-avatar" ng-if="p.sex == '1'" />
             <img src="./libs/img/avatar-woman.png" class="md-avatar" ng-if="p.sex == '2'" />
             <div class="md-list-item-text" layout="column">
@@ -80,13 +81,26 @@
   </div>
 </div>
 
-
   <script src="./dist/js/index.js"></script>
+  <script src="./dist/js/services/Calculator.js"></script>
+
   <script src="./dist/js/config/Connection.js"></script>
   <script src="./dist/js/services/Person.js"></script>
   <script src="./dist/js/controllers/App.js"></script>
   <script src="./dist/js/controllers/Main.js"></script>
   <script src="./dist/js/controllers/Emr.js"></script>
-  
+  <script src="./dist/js/services/LabFu.js"></script>
+  <script src="./dist/js/services/ChronicFu.js"></script>
+  <script src="./dist/js/services/Service.js"></script>
+  <script src="./dist/js/services/Admission.js"></script>
+  <script src="./dist/js/services/CommunityService.js"></script>
+
+  <script src="./dist/js/controllers/dialogs/OpdEmr.js"></script>
+  <script src="./dist/js/controllers/dialogs/IpdEmr.js"></script>
+  <script src="./dist/js/controllers/dialogs/LabFu.js"></script>
+
+
+
+
   </body>
 </html>
