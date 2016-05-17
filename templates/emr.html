@@ -8,7 +8,10 @@
               {{fullname}} อายุ {{age}} ปี
           </h3>
           <span flex></span>
-          <md-button class="md-icon-button" aria-label="Close">
+          <md-button class="md-icon-button" aria-label="Drugallergy" ng-click="showDrugAllergy()">
+            <md-tooltip md-direction="left">
+              ข้อมูลการแพ้ยา
+            </md-tooltip>
             <md-icon class="material-icons">person_pin</md-icon>
           </md-button>
             <!--<md-button class="md-icon-button" aria-label="Close" ng-click="close()">
@@ -62,6 +65,7 @@
       </div>
     </md-toolbar>
     <md-content flex>
+      <md-progress-linear md-mode="indeterminate" ng-show="showLoading"></md-progress-linear>
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Dashboard">
               <md-tab-label>
@@ -157,11 +161,11 @@
                             </tr>
                             </tbody>
                           </table>
-                        </md-table-container>    
+                        </md-table-container>
                     </md-content>
                 </md-tab-body>
             </md-tab>
-            
+
             <md-tab md-on-select="getLab()">
                 <md-tab-label>
                   <md-icon class="material-icons">cloud</md-icon>
@@ -190,7 +194,7 @@
                           </tr>
                         </tbody>
                       </table>
-                    </md-table-container>    
+                    </md-table-container>
                   </md-content>
                 </md-tab-body>
             </md-tab>
@@ -226,11 +230,11 @@
                         </tr>
                         </tbody>
                       </table>
-                    </md-table-container>    
+                    </md-table-container>
                   </md-content>
                 </md-tab-body>
             </md-tab>
-            
+
             <md-tab md-on-select="getCommunityService()">
                 <md-tab-label>
                   <md-icon class="material-icons">cloud</md-icon>
@@ -261,11 +265,11 @@
                         </tr>
                         </tbody>
                       </table>
-                    </md-table-container>    
+                    </md-table-container>
                   </md-content>
                 </md-tab-body>
             </md-tab>
-           
+
         </md-tabs>
     </md-content>
 </div>

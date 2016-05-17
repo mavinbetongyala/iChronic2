@@ -2,20 +2,23 @@
 
 /* global angular */
 
-angular.module('app.controllers.App', ['app.services.Person'])
-.controller('AppCtrl', ($scope, $timeout, $mdSidenav, $log, $state, PersonService, Connection) => {
+angular.module('app.controllers.App', [
+  'app.services.Person',
+  'app.controllers.dialogs.ExportSmoking'
+])
+.controller('AppCtrl', ($scope, $mdDialog, $timeout, $mdSidenav, $log, $state, PersonService, Connection) => {
 
   let db = Connection.getHISConnection();
   $scope.person = [];
   // hide loading
   $scope.loading = false;
 
-  $scope.toggleLeft = buildDelayedToggler('left');
-  $scope.toggleRight = buildToggler('right');
+  // $scope.toggleLeft = buildDelayedToggler('left');
+  // $scope.toggleRight = buildToggler('right');
 
-  $scope.isOpenRight = function(){
-    return $mdSidenav('right').isOpen();
-  };
+  // $scope.isOpenRight = function(){
+  //   return $mdSidenav('right').isOpen();
+  // };
 
   $scope.toggleSearch = () => {
     $scope.showSearch = !$scope.showSearch;
@@ -79,39 +82,14 @@ angular.module('app.controllers.App', ['app.services.Person'])
     $state.go(state);
   };
 
-
-  function debounce(func, wait) {
-    var timer;
-    return function debounced() {
-      var context = $scope,
-        args = Array.prototype.slice.call(arguments);
-
-      $timeout.cancel(timer);
-      timer = $timeout(function() {
-        timer = undefined;
-        func.apply(context, args);
-      }, wait || 10);
-    };
-  }
-
-  function buildDelayedToggler(navID) {
-    return debounce(function() {
-      $mdSidenav(navID)
-      .toggle()
-      .then(function () {
-        $log.debug("toggle " + navID + " is done");
+  $scope.exportData = (ev) => {
+    $mdDialog.show({
+        controller: 'ExportSmokingCtrl',
+        templateUrl: './templates/dialogs/export-data.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: false
       });
-    }, 200);
-  }
+    }
 
-  function buildToggler(navID) {
-    return function() {
-      // Component lookup should always be available since we are not using `ng-if`
-      $mdSidenav(navID)
-      .toggle()
-      .then(function () {
-        $log.debug("toggle " + navID + " is done");
-      });
-    };
-  }
 });

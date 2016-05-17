@@ -8,6 +8,9 @@ const app = electron.app;
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow;
 
+const ipcMain = electron.ipcMain;
+
+
 let mainWindow;
 
 function createWindow() {
@@ -27,13 +30,18 @@ function createWindow() {
 
   //mainWindow.maximize();
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     mainWindow = null;
     //prefsWindow.destroy();
     //prefsWindow = null;
+  });
+
+
+  ipcMain.on('exit-app', function(event, arg) {
+    app.quit();
   });
 
   /*
@@ -69,6 +77,8 @@ function createWindow() {
   */
 }
 
+
+
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 app.on('ready', createWindow);
@@ -77,7 +87,7 @@ app.on('ready', createWindow);
 app.on('window-all-closed', function() {
   // On OS X it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
-
+  app.quit();
 });
 
 app.on('activate', function() {

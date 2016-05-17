@@ -1,0 +1,51 @@
+<md-dialog aria-label="Export Data" ng-cloak style="width: 780px; max-width:800px; max-height:640px; ">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>ข้อมูลการสูบบุหรี่</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-content>
+        <md-table-container>
+            <table md-table>
+              <thead md-head>
+              <tr md-row>
+                <th md-column>#</th>
+                <th md-column>เลขบัตรประชาชน</th>
+                <th md-column>ชื่อ-สกุล</th>
+                <th md-column>ที่อยู่</th>
+                <th md-column></th>
+              </tr>
+              </thead>
+              <tbody md-body>
+              <tr md-row ng-repeat="p in person">
+                <td md-cell>{{ $index + 1 }}</td>
+                <td md-cell>{{ p.cid }}</td>
+                <td md-cell>{{ p.pname }}{{ p.fname }} {{ p.lname }}</td>
+                <td md-cell>{{ p.clinic }}</td>
+                <td md-cell>
+                  <md-input-container>
+                    <md-select ng-model="smoking" placeholder="การสูบบุหรี่">
+                      <md-option ng-repeat="s in smokings" value="{{s.id}}">{{s.name}}</md-option>
+                    </md-select>
+                  </md-input-container>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </md-table-container>
+      </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-primary" ng-click="cancel()" >
+        ปิดหน้าต่าง
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

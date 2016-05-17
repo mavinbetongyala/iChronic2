@@ -15,7 +15,8 @@ angular.module('app.controllers.Emr', [
   'app.controllers.dialogs.OpdEmr',
   'app.controllers.dialogs.IpdEmr',
   'app.controllers.dialogs.LabFu',
-  'app.services.Calculator'
+  'app.services.Calculator',
+  'app.cotrollers.dialogs.DrugAllergy'
 ])
   .controller('EmrCtrl', ($scope, $state, $log, $stateParams, $mdDialog, $rootScope,
                           LabFuService, PersonService, AdmissionService, CalculatorService,
@@ -240,7 +241,10 @@ angular.module('app.controllers.Emr', [
     $scope.hn = null;
     $scope.smoking = null;
     $scope.isDm = false;
-    
+
+    // Show loading
+    $scope.showLoading = true;
+
     // Get person info
     PersonService.getInfo(db, $scope.cid)
       .then(rows => {
@@ -299,22 +303,6 @@ angular.module('app.controllers.Emr', [
           $scope.chartConfigTC.xAxis.categories.push(service_date);
           $scope.chartConfigTC.series[0].data.push(v.LABRESULT);
         });
-      //
-      //   return LabFuService.getLabResult($scope.cid, '15');
-      // })
-      // .then(data => {
-      //   let labs = _.sortBy(data.rows, (obj) => { return obj.DATE_SERV; });
-      //   _.forEach(labs, v => {
-      //     let service_date = moment(v.DATE_SERV).format('DD/MM/YYYY');
-      //     $scope.chartConfigGFR.xAxis.categories.push(service_date);
-      //     let _stage = 0;
-      //     if (v.LABRESULT >= 90) _stage = 1;
-      //     else if(v.LABRESULT >= 60 && v.LABRESULT <= 89) _stage = 2;
-      //     else if (v.LABRESULT >= 30 && v.LABRESULT <= 59) _stage = 3;
-      //     else if (v.LABRESULT >= 15 && v.LABRESULT <= 29) _stage = 4;
-      //     else if (v.LABRESULT < 15) _stage = 5;
-      //     $scope.chartConfigGFR.series[0].data.push(_stage);
-      //   });
 
         return LabFuService.getCreatinine($scope.cid);
       })
@@ -329,27 +317,25 @@ angular.module('app.controllers.Emr', [
           $scope.chartConfigGFR.xAxis.categories.push(service_date);
           $scope.chartConfigGFR.series[0].data.push(stage);
         });
-        //
-        //
-        //
-        // _creatinies.forEach(v => {
-        //   let obj = {};
-        //   obj.DATE_SERV = v.DATE_SERV;
-        //   obj.stage = CalculatorService.egfr(v.LABRESULT, $scope.sex, $scope.age);
-        //   $scope.creatinies.push(obj);
-        // });
-        //
-        // $log.info($scope.creatinies);
+
+      // Hide loading
+      $scope.showLoading = false;
 
       }, err => {
+        // Hide loading
+        $scope.showLoading = false;
         $log.error(err)
       });
 
     $scope.getOpdService = () => {
+      // Show loading
+      $scope.showLoading = true;
+      $scope.services = [];
+
       ServiceService.getServices($scope.cid)
         .then(data => {
           // $log.info(rows)
-          $scope.services = [];
+
           if (data.ok) {
             _.forEach(data.rows, v => {
               let obj = {};
@@ -361,20 +347,27 @@ angular.module('app.controllers.Emr', [
               obj.time = moment(v.TIME_SERV, 'HHmmss').format('HH:mm');
               obj.instype = v.INSTYPE_NAME;
               $scope.services.push(obj);
-            })
+            });
+
+            $scope.showLoading = false;
           } else {
+            $scope.showLoading = false;
             $log.error(data.msg)
           }
         }, err => {
+          $scope.showLoading = false;
           $log.error(err)
         })
     };
 
     $scope.getIpdService = () => {
+      $scope.showLoading = true;
+      $scope.admission = [];
+
       AdmissionService.getAdmission($scope.cid)
         .then(data => {
           // $log.info(rows)
-          $scope.admission = [];
+
           if (data.ok) {
             _.forEach(data.rows, v => {
               let obj = {};
@@ -387,20 +380,26 @@ angular.module('app.controllers.Emr', [
               obj.instype = v.INSTYPE_NAME;
               obj.dischtype_name = v.DISCHTYPE_NAME;
               $scope.admission.push(obj);
-            })
+            });
+
+            $scope.showLoading = false;
           } else {
+            $scope.showLoading = false;
             $log.error(data.msg)
           }
         }, err => {
+          $scope.showLoading = false;
           $log.error(err)
         })
     };
 
     $scope.getLab = () => {
+      $scope.showLoading = true;
+      $scope.labs = [];
       LabFuService.getService($scope.cid)
         .then(data => {
           // $log.info(rows)
-          $scope.labs = [];
+
           if (data.ok) {
             _.forEach(data.rows, v => {
               let obj = {};
@@ -410,18 +409,24 @@ angular.module('app.controllers.Emr', [
               obj.hospital = `${v.HOSPCODE} - ${v.HOSPNAME}`;
               obj.date = moment(v.DATE_SERV, 'YYYY-MM-DD').format('DD/MM/YYYY');
               $scope.labs.push(obj);
-            })
+            });
+
+            $scope.showLoading = false;
           } else {
+            $scope.showLoading = false;
             $log.error(data.msg)
           }
         }, err => {
+          $scope.showLoading = false;
           $log.error(err)
         })
     };
-    
+
     $scope.getCommunityService = () => {
+
+      $scope.showLoading = true;
       $scope.community_services = [];
-      
+
       CommunityService.getService($scope.cid)
         .then(data => {
           if (data.ok) {
@@ -433,11 +438,15 @@ angular.module('app.controllers.Emr', [
               obj.date = moment(v.DATE_SERV, 'YYYY-MM-DD').format('DD/MM/YYYY');
               obj.comservice = v.COMSERVICE_NAME;
               $scope.community_services.push(obj);
-            })
+            });
+
+            $scope.showLoading = false;
           } else {
+            $scope.showLoading = false;
             $log.error(data.msg)
           }
         }, err => {
+          $scope.showLoading = false;
           $log.error(err)
         })
     };
@@ -447,7 +456,7 @@ angular.module('app.controllers.Emr', [
       $rootScope.items.hospcode = hospcode;
       $rootScope.items.pid = pid;
       $rootScope.items.seq = seq;
-      
+
       $mdDialog.show({
           controller: 'OpdEmrCtrl',
           templateUrl: './templates/dialogs/opd-emr.html',
@@ -467,7 +476,7 @@ angular.module('app.controllers.Emr', [
       $rootScope.items.hospcode = hospcode;
       $rootScope.items.pid = pid;
       $rootScope.items.an = an;
-      
+
       $mdDialog.show({
           controller: 'IpdEmrCtrl',
           templateUrl: './templates/dialogs/ipd-emr.html',
@@ -484,12 +493,25 @@ angular.module('app.controllers.Emr', [
       $rootScope.items.seq = seq;
 
       $mdDialog.show({
-          controller: 'LabFuCtrl',
-          templateUrl: './templates/dialogs/lab-result.html',
-          parent: angular.element(document.body),
-          targetEvent: ev,
-          clickOutsideToClose: false
-        });
-    }
+        controller: 'LabFuCtrl',
+        templateUrl: './templates/dialogs/lab-result.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: false
+      });
+    };
+
+
+    $scope.showDrugAllergy = (ev) => {
+      $rootScope.cid = $scope.cid;
+
+      $mdDialog.show({
+        controller: 'DrugAllergyCtrl',
+        templateUrl: './templates/dialogs/drugallergy.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: false
+      });
+    };
 
   });

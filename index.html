@@ -19,10 +19,23 @@
           <span>iChronic 2 (โรงพยาบาลกันทรวิชัย - 11053)</span>
         </h2>
         <span flex></span>
-        <md-button class="md-icon-button" aria-label="Minimize">
+        <md-button class="md-icon-button" aria-label="Debug tools" ng-click="openDebug()">
+          <md-tooltip md-direction="left">
+            Open DevTools
+          </md-tooltip>
+          <md-icon class="material-icons">bug_report</md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button" aria-label="Minimize" ng-click="minimize()">
+          <md-tooltip md-direction="left">
+            Minimize
+          </md-tooltip>
           <md-icon class="material-icons">remove</md-icon>
         </md-button>
-        <md-button class="md-icon-button" aria-label="Close" ng-click="close()">
+        <md-button class="md-icon-button" aria-label="Close" ng-click="exitApp()">
+          <md-tooltip md-direction="left">
+            Exit
+          </md-tooltip>
           <md-icon class="material-icons">close</md-icon>
         </md-button>
       </div>
@@ -36,19 +49,31 @@
       <md-toolbar>
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button" aria-label="More">
+            <md-tooltip md-direction="right">
+              Home
+            </md-tooltip>
             <md-icon class="material-icons">home</md-icon>
           </md-button>
           <!--<md-button class="md-icon-button" aria-label="More">-->
             <!--<md-icon class="material-icons">search</md-icon>-->
           <!--</md-button>-->
           <md-button class="md-icon-button" aria-label="More">
+            <md-tooltip md-direction="top">
+              Settings
+            </md-tooltip>
             <md-icon class="material-icons">settings</md-icon>
           </md-button>
-          <md-button class="md-icon-button" aria-label="More">
+          <md-button class="md-icon-button" aria-label="More" ng-click="exportData($event)">
+            <md-tooltip md-direction="top">
+              Export Dataset
+            </md-tooltip>
             <md-icon class="material-icons">cloud_upload</md-icon>
           </md-button>
           <div flex></div>
           <md-button class="md-icon-button" aria-label="More">
+            <md-tooltip md-direction="top">
+              Video call
+            </md-tooltip>
             <md-icon class="material-icons">videocam</md-icon>
           </md-button>
         </div>
@@ -95,11 +120,13 @@
   <script src="./dist/js/services/Admission.js"></script>
   <script src="./dist/js/services/CommunityService.js"></script>
 
+  <script src="./dist/js/services/Allergy.js"></script>
+
   <script src="./dist/js/controllers/dialogs/OpdEmr.js"></script>
   <script src="./dist/js/controllers/dialogs/IpdEmr.js"></script>
   <script src="./dist/js/controllers/dialogs/LabFu.js"></script>
-
-
+  <script src="./dist/js/controllers/dialogs/ExportSmoking.js"></script>
+  <script src="./dist/js/controllers/dialogs/DrugAllergy.js"></script>
 
 
   </body>

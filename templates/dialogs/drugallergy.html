@@ -1,0 +1,48 @@
+<md-dialog aria-label="Drug Allergy" ng-cloak style="width: 780px; max-width:800px; max-height:640px; ">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>ข้อมูลการแพ้ยา</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-content>
+        <md-table-container>
+            <table md-table>
+              <thead md-head>
+              <tr md-row>
+                <th md-column>บันทึกโดย</th>
+                <th md-column>ชื่อยา</th>
+                <th md-column>ประเภทการวินิจฉัย</th>
+                <th md-column>ระดับความรุนแรง</th>
+                <th md-column>หน่วยงานที่ให้ข้อมูล</th>
+              </tr>
+              </thead>
+              <tbody md-body>
+                <tr md-row ng-if="!allergies.length">
+                  <td md-cell colspan="5">ไม่พบข้อมูลการแพ้ยา</td>
+                </tr>
+              <tr md-row ng-repeat="d in allergies" ng-if="allergies.length">
+                <td md-cell>{{ d.REPORTER}}</td>
+                <td md-cell>{{ d.DNAME }}</td>
+                <td md-cell>{{ d.TYPEDX }}</td>
+                <td md-cell>{{ d.ALELEVELNAMEVEL }}</td>
+                <td md-cell>{{ d.INFORM }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </md-table-container>
+      </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-primary" ng-click="cancel()" >
+        ปิดหน้าต่าง
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

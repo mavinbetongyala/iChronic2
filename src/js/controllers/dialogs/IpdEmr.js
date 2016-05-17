@@ -7,10 +7,8 @@ angular.module('app.controllers.dialogs.IpdEmr', ['app.services.Service'])
       $mdDialog.cancel();
     };
 
-     $log.info($rootScope.items);
-
     $scope.getServiceDiagnosisIpd = () => {
-      
+
       ServiceService.getDiagnosisIpd($rootScope.items.hospcode, $rootScope.items.pid, $rootScope.items.an)
         .then(data => {
           if (data.ok) {
@@ -24,7 +22,7 @@ angular.module('app.controllers.dialogs.IpdEmr', ['app.services.Service'])
     };
 
     $scope.getServiceProcedureIpd = () => {
-      
+
       ServiceService.getProcedureIpd($rootScope.items.hospcode, $rootScope.items.pid, $rootScope.items.an)
         .then(data => {
           if (data.ok) {
@@ -48,7 +46,7 @@ angular.module('app.controllers.dialogs.IpdEmr', ['app.services.Service'])
     };
 
     $scope.getServiceDrugIpd = () => {
-      
+
       ServiceService.getDrugIpd($rootScope.items.hospcode, $rootScope.items.pid, $rootScope.items.an)
         .then(data => {
           if (data.ok) {
@@ -72,7 +70,7 @@ angular.module('app.controllers.dialogs.IpdEmr', ['app.services.Service'])
 
 
     $scope.getServiceChargeIpd = () => {
-      
+
       ServiceService.getChargeIpd($rootScope.items.hospcode, $rootScope.items.pid, $rootScope.items.an)
         .then(data => {
           if (data.ok) {

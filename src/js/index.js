@@ -1,6 +1,7 @@
 /* global angular */
 
 'use strict';
+
 require('angular');
 require('angular-ui-router');
 require('angular-animate');
@@ -10,6 +11,9 @@ require('angular-material');
 require('angular-material-data-table');
 
 const Highcharts = require('highcharts');
+const { BrowserWindow, ipcRenderer, dialog } = require('electron').remote;
+const focusedWindow = BrowserWindow.getFocusedWindow();
+
 require('highcharts/themes/grid');
 require('./node_modules/highcharts-ng/dist/highcharts-ng.js');
 
@@ -54,26 +58,28 @@ angular.module('app', [
 
   })
 
-.controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
-  $scope.close = function() {
-    // Component lookup should always be available since we are not using `ng-if`
-    $mdSidenav('left').close()
-      .then(function() {
-        $log.debug("close LEFT is done");
+  .controller('ToolbarCtrl', ($scope, $log, $mdDialog) => {
+    $scope.exitApp = () => {
+      var confirm = $mdDialog.confirm()
+            .title('Confirmation')
+            .textContent('คุณต้องการออกจากโปรแกรมใช่หรือไม่?')
+            .ariaLabel('Confirm')
+            .ok('ใช่, ออกจากโปรแกรม')
+            .cancel('ไม่ใช่');
+      $mdDialog.show(confirm).then(function() {
+        ipcRenderer.sendSync('exit-app');
+      }, function() {
+        //
       });
-  };
-})
-  .controller('RightCtrl', function($scope, $timeout, $mdSidenav, $log) {
-    $scope.close = function() {
-      // Component lookup should always be available since we are not using `ng-if`
-      $mdSidenav('right').close()
-        .then(function() {
-          $log.debug("close RIGHT is done");
-        });
+
     };
-  })
-  .controller('ToolbarCtrl', ($scope, $log) => {
-    $scope.close = () => {
-      $log.info('Close');
+
+    $scope.openDebug = () => {
+      focusedWindow.webContents.toggleDevTools();
     };
+
+    $scope.minimize = () => {
+      focusedWindow.minimize();
+    };
+
   });
