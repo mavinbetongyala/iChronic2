@@ -1,8 +1,11 @@
-<md-dialog aria-label="Export Data" ng-cloak style="width: 780px; max-width:800px; max-height:640px; ">
+<md-dialog aria-label="Export Data" ng-cloak style="width: 900px; max-width:900px; max-height:640px; ">
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>ข้อมูลการสูบบุหรี่</h2>
+        <h2>
+          <md-icon class="material-icons" aria-label="Upload">cloud_upload</md-icon>
+          ส่งออกข้อมูลการสูบบุหรี่
+        </h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
@@ -11,39 +14,59 @@
     </md-toolbar>
     <md-dialog-content>
       <md-content>
+        <div layout="row" layout-padding>
+          <div flex="20">
+            <md-datepicker ng-model="startDate" md-placeholder="ตั้งแต่วันที่"></md-datepicker>
+          </div>
+          <div flex="20">
+            <md-datepicker ng-model="endDate" md-placeholder="ถึงวันที่"></md-datepicker>
+          </div>
+          <div flex="20">
+            &nbsp;&nbsp;
+            <md-button class="md-raised md-primary" ng-click="getData()">เตรียมข้อมูล</md-button>
+          </div>
+          <div flex="40">
+            <md-subheader class="md-no-sticky">Total {{ smokings.length | number }} record(s).</md-subheader>
+          </div>
+        </div>
+
+        <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
+
         <md-table-container>
-            <table md-table>
-              <thead md-head>
-              <tr md-row>
-                <th md-column>#</th>
-                <th md-column>เลขบัตรประชาชน</th>
-                <th md-column>ชื่อ-สกุล</th>
-                <th md-column>ที่อยู่</th>
-                <th md-column></th>
+          <table md-table>
+            <thead md-head>
+            <tr md-row>
+              <th md-column>#</th>
+              <th md-column>เลขบัตรประชาชน</th>
+              <th md-column>ชื่อ-สกุล</th>
+              <th md-column>วันที่คัดกรอง</th>
+            </tr>
+            </thead>
+            <tbody md-body>
+              <tr md-row ng-if="!smokings.length">
+                <td md-cell colspan="4">ไม่พบรายการ</td>
               </tr>
-              </thead>
-              <tbody md-body>
-              <tr md-row ng-repeat="p in person">
+              <tr md-row ng-if="smokings.length" ng-repeat="s in smokings">
                 <td md-cell>{{ $index + 1 }}</td>
-                <td md-cell>{{ p.cid }}</td>
-                <td md-cell>{{ p.pname }}{{ p.fname }} {{ p.lname }}</td>
-                <td md-cell>{{ p.clinic }}</td>
-                <td md-cell>
-                  <md-input-container>
-                    <md-select ng-model="smoking" placeholder="การสูบบุหรี่">
-                      <md-option ng-repeat="s in smokings" value="{{s.id}}">{{s.name}}</md-option>
-                    </md-select>
-                  </md-input-container>
-                </td>
+                <td md-cell>{{ s.cid }}</td>
+                <td md-cell>{{ s.fullname }}</td>
+                <td md-cell>{{ s.vstdate }}</td>
               </tr>
-              </tbody>
-            </table>
-          </md-table-container>
+            </tbody>
+          </table>
+        </md-table-container>
       </md-content>
     </md-dialog-content>
     <md-dialog-actions layout="row">
+      <md-subheader class="md-no-sticky">Status: {{ message_status }} </md-subheader>
       <span flex></span>
-      <md-button class="md-primary" ng-click="cancel()" >
+      <md-button ng-if="smokings.length" class="md-raised md-primary" ng-click="doExport()" >
+        ส่งออก
+      </md-button>
+      <md-button ng-if="smokings.length" class="md-raised md-primary" ng-click="doExportExcel()" >
+        ส่งออก Excel
+      </md-button>
+      <md-button class="md-default" ng-click="cancel()" >
         ปิดหน้าต่าง
       </md-button>
     </md-dialog-actions>

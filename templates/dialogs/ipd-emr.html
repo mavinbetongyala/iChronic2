@@ -2,7 +2,10 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>ข้อมูลการรับบริการผู้ป่วยใน</h2>
+        <h2>
+          <md-icon class="material-icons" aria-label="Upload">airplay</md-icon>
+          ข้อมูลการรับบริการผู้ป่วยใน
+        </h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
@@ -24,7 +27,10 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row ng-repeat="d in diags">
+                  <tr md-row ng-if="!diags.length">
+                  <td md-cell colspan="4">ไม่พบข้อมูล</td>
+                </tr>
+                <tr md-row ng-repeat="d in diags" ng-if="diags.length">
                   <td md-cell>{{ $index + 1 }}</td>
                   <td md-cell>{{ d.DIAGCODE }}</td>
                   <td md-cell>{{ d.DIAGNAME }}</td>
@@ -49,13 +55,16 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row ng-repeat="p in procedures">
-                  <td md-cell>{{ $index + 1 }}</td>
-                  <td md-cell>{{ p.PROCEDCODE }}</td>
-                  <td md-cell>{{ p.PROCEDNAME }}</td>
-                  <td md-cell>{{ p.TIMESTART }}</td>
-                  <td md-cell>{{ p.TIMEFINISH }}</td>
-                </tr>
+                  <tr md-row ng-if="!procedures.length">
+                    <td md-cell colspan="5">ไม่พบข้อมูล</td>
+                  </tr>
+                  <tr md-row ng-repeat="p in procedures" ng-if="procedures.length">
+                    <td md-cell>{{ $index + 1 }}</td>
+                    <td md-cell>{{ p.PROCEDCODE }}</td>
+                    <td md-cell>{{ p.PROCEDNAME }}</td>
+                    <td md-cell>{{ p.TIMESTART }}</td>
+                    <td md-cell>{{ p.TIMEFINISH }}</td>
+                  </tr>
                 </tbody>
               </table>
             </md-table-container>
@@ -75,13 +84,16 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row ng-repeat="d in drugs">
-                  <td md-cell>{{ $index + 1 }}</td>
-                  <td md-cell>{{ d.DATESTART }}</td>
-                  <td md-cell>{{ d.DNAME }}</td>
-                  <td md-cell>{{ d.AMOUNT | number }}</td>
-                  <td md-cell>{{ d.UNIT_NAME }}</td>
-                </tr>
+                  <tr md-row ng-if="!drugs.length">
+                    <td md-cell colspan="5">ไม่พบข้อมูล</td>
+                  </tr>
+                  <tr md-row ng-repeat="d in drugs" ng-if="drugs.length">
+                    <td md-cell>{{ $index + 1 }}</td>
+                    <td md-cell>{{ d.DATESTART }}</td>
+                    <td md-cell>{{ d.DNAME }}</td>
+                    <td md-cell>{{ d.AMOUNT | number }}</td>
+                    <td md-cell>{{ d.UNIT_NAME }}</td>
+                  </tr>
                 </tbody>
               </table>
             </md-table-container>
@@ -100,12 +112,15 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row ng-repeat="c in charges">
-                  <td md-cell>{{ $index + 1 }}</td>
-                  <td md-cell>{{ c.CHARGEITME_NAME }}</td>
-                  <td md-cell>{{ c.PRICE | number: .2 }}</td>
-                  <td md-cell>{{ c.INSTYPE_NAME }}</td>
-                </tr>
+                  <tr md-row ng-if="!charges.length">
+                    <td md-cell colspan="4">ไม่พบข้อมูล</td>
+                  </tr>
+                  <tr md-row ng-repeat="c in charges" ng-if="charges.length">
+                    <td md-cell>{{ $index + 1 }}</td>
+                    <td md-cell>{{ c.CHARGEITME_NAME }}</td>
+                    <td md-cell>{{ c.PRICE | number: .2 }}</td>
+                    <td md-cell>{{ c.INSTYPE_NAME }}</td>
+                  </tr>
                 </tbody>
               </table>
             </md-table-container>

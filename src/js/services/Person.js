@@ -3,6 +3,52 @@
 angular.module('app.services.Person', [])
   .factory('PersonService', ($q) => {
     return {
+      searchChronicCid(db, cid) {
+        let q = $q.defer();
+        let sql = `
+          select p.pname, p.fname, p.lname, p.cid, c.clinic_member_status_id,
+          cs.clinic_member_status_name, cs.provis_typedis
+          from clinicmember as c
+          inner join person as p on p.patient_hn=c.hn
+          inner join clinic_member_status as cs on cs.clinic_member_status_id=c.clinic_member_status_id
+          where cs.provis_typedis in ('03', '3')
+          and p.cid=?
+          group by p.cid
+        `;
+
+        db.raw(sql, [cid])
+          .then(rows => q.resolve(rows[0][0]))
+          .catch(err => q.reject(err));
+
+        return q.promise;
+
+      },
+
+      getSmokingAll(db, start, end) {
+        let q = $q.defer();
+
+        let sql = `
+          select (select hospitalcode from opdconfig limit 1) as hospcode, p.pname, p.fname, p.lname, p.cid,o.hn,o.vstdate
+          from opdscreen as o
+          inner join person as p on p.patient_hn=o.hn
+          inner join smoking_type as st on st.smoking_type_id=o.smoking_type_id
+          inner join clinicmember as cm on cm.hn=o.hn
+          inner join clinic_member_status as cms on cms.clinic_member_status_id=cm.clinic_member_status_id
+          where o.vstdate between ? and ?
+          and cm.clinic in ('001', '002')
+          and cms.provis_typedis in ('03', '3')
+          and st.nhso_code in ('2', '3', '4')
+          group by p.cid
+          order by o.vstdate desc
+        `;
+
+        db.raw(sql, [start, end])
+          .then(rows => q.resolve(rows[0]))
+          .catch(err => q.reject(err));
+
+        return q.promise;
+      },
+
       getSmoking(db, hn) {
         let q = $q.defer();
 

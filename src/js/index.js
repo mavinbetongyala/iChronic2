@@ -14,6 +14,9 @@ const Highcharts = require('highcharts');
 const { BrowserWindow, ipcRenderer, dialog } = require('electron').remote;
 const focusedWindow = BrowserWindow.getFocusedWindow();
 
+let moment = require('moment');
+
+
 require('highcharts/themes/grid');
 require('./node_modules/highcharts-ng/dist/highcharts-ng.js');
 
@@ -27,7 +30,27 @@ angular.module('app', [
   .run(($log) => {
     $log.info('Welcome to angular.');
   })
-  .config(($urlRouterProvider, $stateProvider, $mdThemingProvider) => {
+  .config(($urlRouterProvider, $stateProvider, $mdThemingProvider, $mdDateLocaleProvider) => {
+
+    let shortMonths = ['ม.ค', 'ก.พ', 'มี.ค', 'เม.ย', 'พ.ค', 'มิ.ย', 'ก.ค', 'ส.ค', 'ก.ย', 'ต.ค', 'พ.ย', 'ธ.ค'];
+
+    $mdDateLocaleProvider.months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+    $mdDateLocaleProvider.shortMonths = shortMonths;
+    $mdDateLocaleProvider.days = ['อาทิตย์', 'จันทร์', 'อังคาร','พุธ', 'พฤหัสบดี', 'ศุกร์','เสาร์'];
+    $mdDateLocaleProvider.shortDays = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
+
+    $mdDateLocaleProvider.monthHeaderFormatter = function (date) {
+      return shortMonths[date.getMonth()] + ' ' + (date.getFullYear() + 543);
+    };
+
+    $mdDateLocaleProvider.formatDate = function (date) {
+      return moment(date).format('DD/MM/YYYY');
+    };
+
+    $mdDateLocaleProvider.parseDate = function (dateString) {
+      var m = moment(dateString, 'L', true);
+      return m.isValid() ? m.toDate() : new Date(NaN);
+    };
 
     $mdThemingProvider.theme('default')
       .primaryPalette('pink', {
@@ -66,10 +89,10 @@ angular.module('app', [
             .ariaLabel('Confirm')
             .ok('ใช่, ออกจากโปรแกรม')
             .cancel('ไม่ใช่');
-      $mdDialog.show(confirm).then(function() {
+      $mdDialog.show(confirm).then(function () {
         ipcRenderer.sendSync('exit-app');
-      }, function() {
-        //
+      }, function () {
+        //user cancel
       });
 
     };

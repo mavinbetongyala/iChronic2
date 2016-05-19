@@ -10,6 +10,9 @@ const BrowserWindow = electron.BrowserWindow;
 
 const ipcMain = electron.ipcMain;
 
+const fse = require('fs-extra');
+const path = require('path');
+const fs = require('fs');
 
 let mainWindow;
 
@@ -30,7 +33,7 @@ function createWindow() {
 
   //mainWindow.maximize();
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
@@ -75,6 +78,35 @@ function createWindow() {
     })
 
   */
+
+  let dataPath = app.getPath('appData');
+  let appPath = path.join(dataPath, 'iChronic');
+  let exportPath = path.join(appPath, 'exports');
+  let configFile = path.join(appPath, 'config.json');
+
+  fse.ensureDirSync(appPath);
+  fse.ensureDirSync(exportPath);
+
+  // fs.access(configFile, fs.W_OK && fs.R_OK, (err) => {
+  //   if (err) {
+  //     let defaultConfig = {
+  //       hosxp: {
+  //         host: '127.0.0.1',
+  //         database: 'hos',
+  //         port: 3306,
+  //         user: 'sa',
+  //         password: '123456'
+  //       },
+
+  //       url: 'http://localhost:3000',
+  //       key: 'aaf891ddefffa0914b4d17e701cf5bd493ec2504'
+  //     };
+
+  //     fse.writeJsonSync(configFile, defaultConfig);
+
+  //   }
+  // });
+
 }
 
 

@@ -2,7 +2,10 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>ข้อมูลการตรวจ LAB</h2>
+        <h2>
+          <md-icon class="material-icons" aria-label="Upload">airplay</md-icon>
+          ข้อมูลการตรวจ LAB
+        </h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
@@ -21,7 +24,10 @@
             </tr>
             </thead>
             <tbody md-body>
-            <tr md-row ng-repeat="l in labs">
+              <tr md-row ng-if="!labs.length">
+                  <td md-cell colspan="4">ไม่พบข้อมูล</td>
+                </tr>
+            <tr md-row ng-repeat="l in labs" ng-if="labs.length">
               <td md-cell>{{ $index + 1 }}</td>
               <td md-cell>{{ l.LABTEST_NAME }}</td>
               <td md-cell>{{ l.LABRESULT }}</td>
