@@ -1,5 +1,7 @@
 'use strict';
 
+if (require('electron-squirrel-startup')) return;
+
 /* global __dirname */
 
 const electron = require('electron');
