@@ -16,7 +16,7 @@
           <md-icon class="material-icons">desktop_windows</md-icon>
         </md-button>
         <h2 style="-webkit-app-region: drag">
-          <span>iChronic 2 (โรงพยาบาลกันทรวิชัย - 11053)</span>
+          <span>iChronic 2 ({{ hospitalInfo.hospitalname }} - {{ hospitalInfo.hospitalcode }})</span>
         </h2>
         <span flex></span>
         <md-button class="md-icon-button" aria-label="Debug tools" ng-click="openDebug()">
@@ -48,7 +48,7 @@
             md-whiteframe="4">
       <md-toolbar>
         <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="More">
+          <md-button class="md-icon-button" aria-label="More" ng-click="go('main')">
             <md-tooltip md-direction="right">
               Home
             </md-tooltip>
@@ -57,9 +57,9 @@
           <!--<md-button class="md-icon-button" aria-label="More">-->
             <!--<md-icon class="material-icons">search</md-icon>-->
           <!--</md-button>-->
-          <md-button class="md-icon-button" aria-label="More">
+          <md-button class="md-icon-button" aria-label="Connection Setting" ng-click="connectionSetting($event)">
             <md-tooltip md-direction="top">
-              Settings
+              Connection setting
             </md-tooltip>
             <md-icon class="material-icons">settings</md-icon>
           </md-button>
@@ -109,6 +109,7 @@
   <script src="./dist/js/index.js"></script>
   <script src="./dist/js/services/Calculator.js"></script>
 
+  <script src="./dist/js/config/Configure.js"></script>
   <script src="./dist/js/config/Connection.js"></script>
   <script src="./dist/js/services/Person.js"></script>
   <script src="./dist/js/controllers/App.js"></script>
@@ -127,6 +128,7 @@
   <script src="./dist/js/controllers/dialogs/LabFu.js"></script>
   <script src="./dist/js/controllers/dialogs/ExportSmoking.js"></script>
   <script src="./dist/js/controllers/dialogs/DrugAllergy.js"></script>
+  <script src="./dist/js/controllers/dialogs/Connection.js"></script>
 
 
   </body>

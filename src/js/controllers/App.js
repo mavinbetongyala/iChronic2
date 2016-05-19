@@ -4,11 +4,21 @@
 
 angular.module('app.controllers.App', [
   'app.services.Person',
-  'app.controllers.dialogs.ExportSmoking'
+  'app.controllers.dialogs.ExportSmoking',
+  'app.controllers.dialogs.Connection'
 ])
-.controller('AppCtrl', ($scope, $mdDialog, $timeout, $mdSidenav, $log, $state, PersonService, Connection) => {
+.controller('AppCtrl', ($scope, $rootScope, $mdDialog, $timeout, $mdSidenav, $log, $state, PersonService, Connection) => {
 
   let db = Connection.getHISConnection();
+
+  Connection.getHospitalInfo(db)
+    .then(info => {
+      $rootScope.hospitalInfo = info;
+      $log.info($scope.hospitalInfo);
+    }, err => {
+      $log.error(err);
+    });
+
   $scope.person = [];
   // hide loading
   $scope.loading = false;
@@ -86,6 +96,16 @@ angular.module('app.controllers.App', [
     $mdDialog.show({
         controller: 'ExportSmokingCtrl',
         templateUrl: './templates/dialogs/export-data.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose: false
+      });
+    }
+
+  $scope.connectionSetting = (ev) => {
+    $mdDialog.show({
+        controller: 'ConnectionCtrl',
+        templateUrl: './templates/dialogs/connection.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: false

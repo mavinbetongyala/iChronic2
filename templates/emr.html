@@ -61,17 +61,21 @@
                       </tr>
                       </thead>
                       <tbody md-body>
-                      <tr md-row ng-repeat="s in services">
-                        <td md-cell>{{ s.date }}</td>
-                        <td md-cell>{{ s.time }}</td>
-                        <td md-cell>{{ s.hospital }}</td>
-                        <td md-cell>{{ s.instype }}</td>
-                        <td md-cell>
-                          <md-button class="md-icon-button" aria-label="More" ng-click="getOpdEmr(s.hospcode, s.pid, s.seq, $event)">
-                            <md-icon class="material-icons">search</md-icon>
-                          </md-button>
-                        </td>
-                      </tr>
+                        <tr md-row ng-if="!services.length">
+                          <td md-cell colspan="5">ไม่พบข้อมูล</td>
+                        </tr>
+
+                        <tr md-row ng-repeat="s in services" ng-if="services.length">
+                          <td md-cell>{{ s.date }}</td>
+                          <td md-cell>{{ s.time }}</td>
+                          <td md-cell>{{ s.hospital }}</td>
+                          <td md-cell>{{ s.instype }}</td>
+                          <td md-cell>
+                            <md-button class="md-icon-button" aria-label="More" ng-click="getOpdEmr(s.hospcode, s.pid, s.seq, $event)">
+                              <md-icon class="material-icons">search</md-icon>
+                            </md-button>
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                   </md-table-container>
@@ -99,18 +103,21 @@
                               </tr>
                             </thead>
                             <tbody md-body>
-                            <tr md-row ng-repeat="a in admission">
-                              <td md-cell>{{ a.date }}</td>
-                              <td md-cell>{{ a.time }}</td>
-                              <td md-cell>{{ a.hospital }}</td>
-                              <!--<td md-cell>{{ a.instype }}</td>-->
-                              <td md-cell>{{ a.dischtype_name }}</td>
-                              <td md-cell>
-                                <md-button class="md-icon-button" aria-label="More" ng-click="getIpdEmr(a.hospcode, a.pid, a.an, $event)">
-                                  <md-icon class="material-icons">search</md-icon>
-                                </md-button>
-                              </td>
-                            </tr>
+                              <tr md-row ng-if="!admission.length">
+                                <td md-cell colspan="5">ไม่พบข้อมูล</td>
+                              </tr>
+                              <tr md-row ng-repeat="a in admission" ng-if="admission.length">
+                                <td md-cell>{{ a.date }}</td>
+                                <td md-cell>{{ a.time }}</td>
+                                <td md-cell>{{ a.hospital }}</td>
+                                <!--<td md-cell>{{ a.instype }}</td>-->
+                                <td md-cell>{{ a.dischtype_name }}</td>
+                                <td md-cell>
+                                  <md-button class="md-icon-button" aria-label="More" ng-click="getIpdEmr(a.hospcode, a.pid, a.an, $event)">
+                                    <md-icon class="material-icons">search</md-icon>
+                                  </md-button>
+                                </td>
+                              </tr>
                             </tbody>
                           </table>
                         </md-table-container>
@@ -135,7 +142,10 @@
                         </tr>
                         </thead>
                         <tbody md-body>
-                          <tr md-row ng-repeat="l in labs">
+                          <tr md-row ng-if="!labs.length">
+                            <td md-cell colspan="3">ไม่พบข้อมูล</td>
+                          </tr>
+                          <tr md-row ng-repeat="l in labs" ng-if="labs.length">
                             <td md-cell>{{ l.date }}</td>
                             <td md-cell>{{ l.hospital }}</td>
                             <td md-cell>
@@ -169,17 +179,15 @@
                         </tr>
                         </thead>
                         <tbody md-body>
-                        <tr md-row ng-repeat="c in chronicfu">
-                          <td md-cell>{{ c.date }}</td>
-                          <td md-cell>{{ c.hospital }}</td>
-                          <td md-cell>{{ c.retina }}</td>
-                          <td md-cell>{{ c.foot }}</td>
-                          <!--<td md-cell>-->
-                            <!--<md-button class="md-icon-button" aria-label="More" ng-click="edit(c.id)">-->
-                              <!--<md-icon class="material-icons">search</md-icon>-->
-                            <!--</md-button>-->
-                          <!--</td>-->
-                        </tr>
+                          <tr md-row ng-if="!chronicfu.length">
+                            <td md-cell colspan="4">ไม่พบข้อมูล</td>
+                          </tr>
+                          <tr md-row ng-repeat="c in chronicfu" ng-if="chronicfu.length">
+                            <td md-cell>{{ c.date }}</td>
+                            <td md-cell>{{ c.hospital }}</td>
+                            <td md-cell>{{ c.retina }}</td>
+                            <td md-cell>{{ c.foot }}</td>
+                          </tr>
                         </tbody>
                       </table>
                     </md-table-container>
@@ -205,15 +213,13 @@
                           </tr>
                         </thead>
                         <tbody md-body>
-                        <tr md-row ng-repeat="cs in community_services">
+                          <tr md-row ng-if="!community_service.length">
+                            <td md-cell colspan="3">ไม่พบข้อมูล</td>
+                          </tr>
+                        <tr md-row ng-repeat="cs in community_services" ng-if="community_service.length">
                           <td md-cell>{{ cs.date }}</td>
                           <td md-cell>{{ cs.hospital }}</td>
                           <td md-cell>{{ cs.comservice }}</td>
-                          <!--<td md-cell>-->
-                            <!--<md-button class="md-icon-button" aria-label="More" ng-click="edit(c.id)">-->
-                              <!--<md-icon class="material-icons">search</md-icon>-->
-                            <!--</md-button>-->
-                          <!--</td>-->
                         </tr>
                         </tbody>
                       </table>

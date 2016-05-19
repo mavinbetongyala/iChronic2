@@ -22,12 +22,14 @@ require('./node_modules/highcharts-ng/dist/highcharts-ng.js');
 
 angular.module('app', [
   'ngMaterial', 'ui.router', 'md.data.table', 'highcharts-ng',
+  'app.config.Configure',
   'app.config.Connection',
   'app.controllers.Main',
   'app.controllers.App',
   'app.controllers.Emr'
 ])
-  .run(($log) => {
+  .run(($log, Configure) => {
+    Configure.initialConfigure();
     $log.info('Welcome to angular.');
   })
   .config(($urlRouterProvider, $stateProvider, $mdThemingProvider, $mdDateLocaleProvider) => {
@@ -81,7 +83,16 @@ angular.module('app', [
 
   })
 
-  .controller('ToolbarCtrl', ($scope, $log, $mdDialog) => {
+  .controller('ToolbarCtrl', ($scope, $log, $mdDialog, Connection) => {
+
+    // Get hospital info
+    let db = Connection.getHISConnection();
+
+    Connection.getHospitalInfo(db)
+      .then(info => {
+        $log.info(info);
+      });
+
     $scope.exitApp = () => {
       var confirm = $mdDialog.confirm()
             .title('Confirmation')

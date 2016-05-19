@@ -1,0 +1,64 @@
+<md-dialog aria-label="Drug Allergy" ng-cloak style="width: 780px; max-width:800px; max-height:640px; ">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>
+          <md-icon class="material-icons" aria-label="Upload">security</md-icon>
+          กำหนดค่าการเชื่อมต่อ
+        </h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon class="material-icons" aria-label="Close dialog">close</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <md-content layout-padding>
+        <form name="frmConnection">
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>HOST</label>
+              <input ng-model="config.hos.host" type="text" ng-required="true">
+            </md-input-container>
+            <md-input-container>
+              <label>Port</label>
+              <input ng-model="config.hos.port" type="number" ng-required="true">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Database</label>
+              <input ng-model="config.hos.database" type="text" ng-required="true">
+            </md-input-container>
+          </div>
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Username</label>
+              <input ng-model="config.hos.user" type="text" ng-required="true">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Password</label>
+              <input ng-model="config.hos.password" type="password" ng-required="true">
+            </md-input-container>
+          </div>
+
+          <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Server URL</label>
+              <input ng-model="config.url" type="text" ng-required="true">
+            </md-input-container>
+            <md-input-container class="md-block" flex-gt-sm>
+              <label>Key</label>
+              <input ng-model="config.key" type="text" ng-required="true">
+            </md-input-container>
+          </div>
+        </form>
+      </md-content>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-primary md-raised" ng-click="save()">บันทึก</md-button>
+      <md-button class="md-default" ng-click="cancel()" >
+        ปิดหน้าต่าง
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
