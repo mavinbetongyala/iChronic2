@@ -25,7 +25,9 @@ function createWindow() {
     titleBarStyle: 'hidden',
     maximizable: false,
     resizable: false,
-    center: true
+    center: true,
+    icon: './ico/calendar.png',
+    title: 'iChronic 2'
   });
 
   // and load the index.html of the app.
