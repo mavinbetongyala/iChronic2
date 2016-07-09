@@ -8,103 +8,140 @@
     <link rel="stylesheet" href="./dist/css/style.css">
     <title>iChronic 2</title>
   </head>
-  <body>
+  <body ng-clock>
 
-<md-toolbar class="md-hue-2" ng-controller="ToolbarCtrl">
-      <div class="md-toolbar-tools">
-        <md-button style="-webkit-app-region: drag" class="md-icon-button" aria-label="Settings">
-          <md-icon class="material-icons">desktop_windows</md-icon>
-        </md-button>
-        <h2 style="-webkit-app-region: drag">
-          <span>iChronic 2 ({{ hospitalInfo.hospitalname }} - {{ hospitalInfo.hospitalcode }})</span>
-        </h2>
-        <span flex></span>
-        <md-button class="md-icon-button" aria-label="Debug tools" ng-click="openDebug()">
-          <md-tooltip md-direction="left">
-            Open DevTools
-          </md-tooltip>
-          <md-icon class="material-icons">bug_report</md-icon>
-        </md-button>
+    <div layout="column" style="height: 100%;">
+      <section layout="row" flex>
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2"
+        md-component-id="left"
+        md-is-locked-open="$mdMedia('gt-sm')"
+        md-disable-backdrop=""
+        md-whiteframe="4"
+        >
 
-        <md-button class="md-icon-button" aria-label="Minimize" ng-click="minimize()">
-          <md-tooltip md-direction="left">
-            Minimize
-          </md-tooltip>
-          <md-icon class="material-icons">remove</md-icon>
-        </md-button>
-        <md-button class="md-icon-button" aria-label="Close" ng-click="exitApp()">
-          <md-tooltip md-direction="left">
-            Exit
-          </md-tooltip>
-          <md-icon class="material-icons">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
-<div layout="row">
-  <div ng-controller="AppCtrl">
-    <md-sidenav flex
-            md-is-locked-open="true"
-            md-disable-backdrop
-            md-whiteframe="4">
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <md-button class="md-icon-button" aria-label="More" ng-click="go('main')">
-            <md-tooltip md-direction="right">
-              Home
-            </md-tooltip>
-            <md-icon class="material-icons">home</md-icon>
-          </md-button>
-          <!--<md-button class="md-icon-button" aria-label="More">-->
-            <!--<md-icon class="material-icons">search</md-icon>-->
-          <!--</md-button>-->
-          <md-button class="md-icon-button" aria-label="Connection Setting" ng-click="connectionSetting($event)">
-            <md-tooltip md-direction="top">
-              Connection setting
-            </md-tooltip>
-            <md-icon class="material-icons">settings</md-icon>
-          </md-button>
-          <md-button class="md-icon-button" aria-label="More" ng-click="exportData($event)">
-            <md-tooltip md-direction="top">
-              Export Dataset
-            </md-tooltip>
-            <md-icon class="material-icons">cloud_upload</md-icon>
-          </md-button>
-          <div flex></div>
-          <md-button class="md-icon-button" aria-label="More">
-            <md-tooltip md-direction="top">
-              Video call
-            </md-tooltip>
-            <md-icon class="material-icons">videocam</md-icon>
-          </md-button>
-        </div>
-      </md-toolbar>
+          <!--left toolbar-->
+          <md-toolbar ng-controller="ToolbarCtrl" style="position:fixed;">
+            <div class="md-toolbar-tools">
+              <md-button class="md-icon-button" aria-label="More" ng-click="go('main')">
+                <md-tooltip md-direction="right">
+                  Home
+                </md-tooltip>
+                <md-icon class="material-icons">home</md-icon>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="Connection Setting" ng-click="connectionSetting($event)">
+                <md-tooltip md-direction="top">
+                  Connection setting
+                </md-tooltip>
+                <md-icon class="material-icons">settings</md-icon>
+              </md-button>
+              <md-button class="md-icon-button" aria-label="More" ng-click="exportData($event)">
+                <md-tooltip md-direction="top">
+                  Export Dataset
+                </md-tooltip>
+                <md-icon class="material-icons">cloud_upload</md-icon>
+              </md-button>
+              <div flex></div>
+                <md-button class="md-icon-button" aria-label="Debug tools" ng-click="openDebug()">
+                  <md-tooltip md-direction="left">
+                    Open DevTools
+                  </md-tooltip>
+                  <md-icon class="material-icons">bug_report</md-icon>
+                </md-button>
 
-      <md-content style="height: 552px;">
-      <!--<md-content>-->
-        <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
-        <md-input-container  md-no-float class="md-block" style="margin:15px 2px 0 2px; padding: 0;">
-          <input placeholder="ค้นหา" ng-model="query" ng-keypress="search($event)">
-        </md-input-container>
-
-        <md-subheader class="md-no-sticky">แสดง {{ person.length | number }} เรคคอร์ด</md-subheader>
-        <md-list>
-          <md-list-item class="md-2-line" ng-repeat="p in person" href="#/emr/{{ p.cid }}">
-            <img src="./libs/img/avatar-man.png" class="md-avatar" ng-if="p.sex == '1'" />
-            <img src="./libs/img/avatar-woman.png" class="md-avatar" ng-if="p.sex == '2'" />
-            <div class="md-list-item-text" layout="column">
-              <h3>{{ p.pname }}{{ p.fname }} {{ p.lname }}</h3>
-              <p>{{ p.clinic }}</p>
+                <md-button class="md-icon-button" aria-label="Minimize" ng-click="minimize()">
+                  <md-tooltip md-direction="left">
+                    Minimize
+                  </md-tooltip>
+                  <md-icon class="material-icons">remove</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="exitApp()">
+                  <md-tooltip md-direction="left">
+                    Exit
+                  </md-tooltip>
+                  <md-icon class="material-icons">close</md-icon>
+                </md-button>
             </div>
-            <!--<md-icon class="material-icons md-primary">notifications_active</md-icon>-->
-          </md-list-item>
-        </md-list>
-      </md-content>
-    </md-sidenav>
-  </div>
-  <div flex>
-    <ui-view></ui-view>
-  </div>
-</div>
+          </md-toolbar>
+
+          <md-content ng-controller="AppCtrl" style="padding-top: 64px">
+
+            <md-progress-linear md-mode="indeterminate" ng-show="loading"></md-progress-linear>
+            <md-input-container  md-no-float class="md-block" style="margin:15px 2px 0 2px; padding: 0;">
+              <input placeholder="ค้นหา" ng-model="query" ng-keypress="search($event)">
+            </md-input-container>
+            <md-subheader class="md-no-sticky">แสดง {{ person.length | number }} เรคคอร์ด</md-subheader>
+
+
+            <md-list>
+              <md-list-item class="md-2-line" ng-repeat="p in person" href="#/emr/{{ p.cid }}">
+                <img src="./libs/img/avatar-man.png" class="md-avatar" ng-if="p.sex == '1'" />
+                <img src="./libs/img/avatar-woman.png" class="md-avatar" ng-if="p.sex == '2'" />
+                <div class="md-list-item-text" layout="column">
+                  <h3>{{ p.pname }}{{ p.fname }} {{ p.lname }}</h3>
+                  <p>{{ p.clinic }}</p>
+                </div>
+                <!--<md-icon class="material-icons md-primary">notifications_active</md-icon>-->
+              </md-list-item>
+            </md-list>
+
+
+          </md-content>
+        </md-sidenav>
+
+        <!--Main Content-->
+        <md-content
+        layout="column"
+        layout-fill
+        layout-align="top center">
+          <div layout="column"
+          layout-fill>
+
+            <!--Main toolbar -->
+            <!--
+            <md-toolbar class="md-hue-2" ng-controller="ToolbarCtrl" style="position:fixed;">
+              <div class="md-toolbar-tools">
+                <md-button
+                class="md-icon-button" aria-label="Toggle"
+                ng-click="toggleLeft()">
+                  <md-icon class="material-icons">desktop_windows</md-icon>
+                </md-button>
+                <h2>
+                  <span>iChronic 2 ({{ hospitalInfo.hospitalname }} - {{ hospitalInfo.hospitalcode }})</span>
+                </h2>
+                <span flex></span>
+                <md-button class="md-icon-button" aria-label="Debug tools" ng-click="openDebug()">
+                  <md-tooltip md-direction="left">
+                    Open DevTools
+                  </md-tooltip>
+                  <md-icon class="material-icons">bug_report</md-icon>
+                </md-button>
+
+                <md-button class="md-icon-button" aria-label="Minimize" ng-click="minimize()">
+                  <md-tooltip md-direction="left">
+                    Minimize
+                  </md-tooltip>
+                  <md-icon class="material-icons">remove</md-icon>
+                </md-button>
+                <md-button class="md-icon-button" aria-label="Close" ng-click="exitApp()">
+                  <md-tooltip md-direction="left">
+                    Exit
+                  </md-tooltip>
+                  <md-icon class="material-icons">close</md-icon>
+                </md-button>
+
+              </div>
+            </md-toolbar>
+
+            -->
+
+            <ui-view></ui-view>
+
+          </div>
+
+        </md-content>
+
+      </section>
+    </div>
 
   <script src="./dist/js/index.js"></script>
   <script src="./dist/js/services/Calculator.js"></script>
@@ -113,6 +150,7 @@
   <script src="./dist/js/config/Connection.js"></script>
   <script src="./dist/js/services/Person.js"></script>
   <script src="./dist/js/controllers/App.js"></script>
+  <script src="./dist/js/controllers/Toolbar.js"></script>
   <script src="./dist/js/controllers/Main.js"></script>
   <script src="./dist/js/controllers/Emr.js"></script>
   <script src="./dist/js/services/LabFu.js"></script>

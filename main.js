@@ -1,6 +1,6 @@
 'use strict';
 
-if (require('electron-squirrel-startup')) return;
+//if (require('electron-squirrel-startup')) return;
 
 /* global __dirname */
 
@@ -21,12 +21,12 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1024,
-    height: 680,
+    // width: 1024,
+    // height: 680,
     frame: false,
     titleBarStyle: 'hidden',
-    maximizable: false,
-    resizable: false,
+    // maximizable: true,
+    resizable: true,
     center: true,
     icon: './ico/calendar.png',
     title: 'iChronic 2'
@@ -34,10 +34,10 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.maximize();
 
-  //mainWindow.maximize();
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {

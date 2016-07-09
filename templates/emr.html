@@ -1,5 +1,5 @@
-<div layout="column" style="height:615px" ng-cloak>
-    <md-toolbar>
+<div layout="column" ng-cloak>
+    <md-toolbar md-scroll-shrink ng-if="true" class="md-hue-2" style="position:fixed;">
         <div class="md-toolbar-tools">
           <md-button class="md-icon-button" aria-label="Close" ng-click="goHome()">
             <md-icon class="material-icons">keyboard_backspace</md-icon>
@@ -16,7 +16,7 @@
           </md-button>
       </div>
     </md-toolbar>
-    <md-content flex>
+    <md-content flex style="padding-top: 64px">
       <md-progress-linear md-mode="indeterminate" ng-show="showLoading"></md-progress-linear>
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="Dashboard">
@@ -25,7 +25,8 @@
                 Dashboard
               </md-tab-label>
               <md-tab-body>
-                <div layout="column">
+
+                <div layout="column" layout-fill layout-align="top center">
                   <div flex layout-padding>
                     <highchart config="chartConfigBP"></highchart>
                   </div>
@@ -94,7 +95,9 @@
                           <table md-table>
                             <thead md-head>
                               <tr md-row>
-                                <th md-column>วันที่</th>
+                                <th md-column>วันที่รับ</th>
+                                <th md-column>เวลา</th>
+                                <th md-column>วันที่จำหน่าย</th>
                                 <th md-column>เวลา</th>
                                 <th md-column>หน่วยบริการ</th>
                                 <!--<th md-column>สิทธิ์การรักษา</th>-->
@@ -104,11 +107,13 @@
                             </thead>
                             <tbody md-body>
                               <tr md-row ng-if="!admission.length">
-                                <td md-cell colspan="5">ไม่พบข้อมูล</td>
+                                <td md-cell colspan="7">ไม่พบข้อมูล</td>
                               </tr>
                               <tr md-row ng-repeat="a in admission" ng-if="admission.length">
-                                <td md-cell>{{ a.date }}</td>
-                                <td md-cell>{{ a.time }}</td>
+                                <td md-cell>{{ a.adm_date }}</td>
+                                <td md-cell>{{ a.adm_time }}</td>
+                                <td md-cell>{{ a.disc_date }}</td>
+                                <td md-cell>{{ a.disc_time }}</td>
                                 <td md-cell>{{ a.hospital }}</td>
                                 <!--<td md-cell>{{ a.instype }}</td>-->
                                 <td md-cell>{{ a.dischtype_name }}</td>

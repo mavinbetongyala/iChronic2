@@ -88,28 +88,4 @@ angular.module('app.controllers.App', [
     }
   };
 
-  $scope.go = (state) => {
-    $state.go(state);
-  };
-
-  $scope.exportData = (ev) => {
-    $mdDialog.show({
-        controller: 'ExportSmokingCtrl',
-        templateUrl: './templates/dialogs/export-data.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: false
-      });
-    }
-
-  $scope.connectionSetting = (ev) => {
-    $mdDialog.show({
-        controller: 'ConnectionCtrl',
-        templateUrl: './templates/dialogs/connection.html',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose: false
-      });
-    }
-
 });

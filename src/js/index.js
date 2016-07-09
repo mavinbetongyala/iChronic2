@@ -26,6 +26,7 @@ angular.module('app', [
   'app.config.Connection',
   'app.controllers.Main',
   'app.controllers.App',
+  'app.controllers.Toolbar',
   'app.controllers.Emr'
 ])
   .run(($log, Configure) => {
@@ -38,7 +39,7 @@ angular.module('app', [
 
     $mdDateLocaleProvider.months = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
     $mdDateLocaleProvider.shortMonths = shortMonths;
-    $mdDateLocaleProvider.days = ['อาทิตย์', 'จันทร์', 'อังคาร','พุธ', 'พฤหัสบดี', 'ศุกร์','เสาร์'];
+    $mdDateLocaleProvider.days = ['อาทิตย์', 'จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์'];
     $mdDateLocaleProvider.shortDays = ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ', 'ส'];
 
     $mdDateLocaleProvider.monthHeaderFormatter = function (date) {
@@ -81,39 +82,39 @@ angular.module('app', [
         controller: 'EmrCtrl'
       });
 
-  })
-
-  .controller('ToolbarCtrl', ($scope, $log, $mdDialog, Connection) => {
-
-    // Get hospital info
-    let db = Connection.getHISConnection();
-
-    Connection.getHospitalInfo(db)
-      .then(info => {
-        $log.info(info);
-      });
-
-    $scope.exitApp = () => {
-      var confirm = $mdDialog.confirm()
-            .title('Confirmation')
-            .textContent('คุณต้องการออกจากโปรแกรมใช่หรือไม่?')
-            .ariaLabel('Confirm')
-            .ok('ใช่, ออกจากโปรแกรม')
-            .cancel('ไม่ใช่');
-      $mdDialog.show(confirm).then(function () {
-        ipcRenderer.sendSync('exit-app');
-      }, function () {
-        //user cancel
-      });
-
-    };
-
-    $scope.openDebug = () => {
-      focusedWindow.webContents.toggleDevTools();
-    };
-
-    $scope.minimize = () => {
-      focusedWindow.minimize();
-    };
-
   });
+
+  // .controller('ToolbarCtrl', ($scope, $log, $mdDialog, Connection) => {
+
+  //   // Get hospital info
+  //   let db = Connection.getHISConnection();
+
+  //   Connection.getHospitalInfo(db)
+  //     .then(info => {
+  //       $log.info(info);
+  //     });
+
+  //   $scope.exitApp = () => {
+  //     var confirm = $mdDialog.confirm()
+  //           .title('Confirmation')
+  //           .textContent('คุณต้องการออกจากโปรแกรมใช่หรือไม่?')
+  //           .ariaLabel('Confirm')
+  //           .ok('ใช่, ออกจากโปรแกรม')
+  //           .cancel('ไม่ใช่');
+  //     $mdDialog.show(confirm).then(function () {
+  //       ipcRenderer.sendSync('exit-app');
+  //     }, function () {
+  //       //user cancel
+  //     });
+
+  //   };
+
+  //   $scope.openDebug = () => {
+  //     focusedWindow.webContents.toggleDevTools();
+  //   };
+
+  //   $scope.minimize = () => {
+  //     focusedWindow.minimize();
+  //   };
+
+  // });

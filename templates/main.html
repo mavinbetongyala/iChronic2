@@ -1,13 +1,21 @@
 <div layout="column" style="height:615px" ng-cloak>
-    <md-toolbar>
+    <md-toolbar class="md-hue-2">
         <div class="md-toolbar-tools">
-            <h3>
-                Welcome to iChronic version 2
-            </h3>
-            <span flex></span>
-            <md-button class="md-icon-button" aria-label="Close">
-                <md-icon class="material-icons">person_pin</md-icon>
-            </md-button>
+            <md-button
+                class="md-icon-button" aria-label="Toggle"
+                ng-click="toggleLeft()">
+                  <md-icon class="material-icons">desktop_windows</md-icon>
+                </md-button>
+                <h2>
+                  <span>iChronic 2 ({{ hospitalInfo.hospitalname }} - {{ hospitalInfo.hospitalcode }})</span>
+                </h2>
+                <span flex></span>
+                <!--<md-button class="md-icon-button" aria-label="Debug tools" ng-click="openDebug()">
+                  <md-tooltip md-direction="left">
+                    Open DevTools
+                  </md-tooltip>
+                  <md-icon class="material-icons">bug_report</md-icon>
+                </md-button>-->
 
         </div>
     </md-toolbar>

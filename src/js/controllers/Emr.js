@@ -39,8 +39,7 @@ angular.module('app.controllers.Emr', [
     $scope.chartConfigFBS = {
       options: {
         chart: {
-          type: 'line',
-          width: 670
+          type: 'line'
         },
 
         plotOptions: {
@@ -96,8 +95,7 @@ angular.module('app.controllers.Emr', [
     $scope.chartConfigBP = {
       options: {
         chart: {
-          type: 'line',
-          width: 670
+          type: 'line'
         },
 
         plotOptions: {
@@ -170,8 +168,7 @@ angular.module('app.controllers.Emr', [
     $scope.chartConfigGFR = {
       options: {
         chart: {
-          type: 'line',
-          width: 670
+          type: 'line'
         }
       },
       legend: {
@@ -204,8 +201,7 @@ angular.module('app.controllers.Emr', [
     $scope.chartConfigTC = {
       options: {
         chart: {
-          type: 'line',
-          width: 670
+          type: 'line'
         }
       },
       legend: {
@@ -375,8 +371,10 @@ angular.module('app.controllers.Emr', [
               obj.an = v.AN;
               obj.hospcode = v.HOSPCODE;
               obj.hospital = `${v.HOSPCODE} - ${v.HOSPNAME}`;
-              obj.date = moment(v.DATETIME_ADMIT, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
-              obj.time = moment(v.DATETIME_ADMIT, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+              obj.adm_date = moment(v.DATETIME_ADMIT, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+              obj.adm_time = moment(v.DATETIME_ADMIT, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
+              obj.disc_date = moment(v.DATETIME_DISCH, 'YYYY-MM-DD HH:mm:ss').format('DD/MM/YYYY');
+              obj.disc_time = moment(v.DATETIME_DISCH, 'YYYY-MM-DD HH:mm:ss').format('HH:mm');
               obj.instype = v.INSTYPE_NAME;
               obj.dischtype_name = v.DISCHTYPE_NAME;
               $scope.admission.push(obj);
