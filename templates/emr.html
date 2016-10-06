@@ -90,7 +90,7 @@
                   ผู้ป่วยใน (IPD)
                 </md-tab-label>
                 <md-tab-body>
-                    <md-content>
+                  <md-content>
                     <md-table-container>
                           <table md-table>
                             <thead md-head>
@@ -109,6 +109,7 @@
                               <tr md-row ng-if="!admission.length">
                                 <td md-cell colspan="7">ไม่พบข้อมูล</td>
                               </tr>
+                              
                               <tr md-row ng-repeat="a in admission" ng-if="admission.length">
                                 <td md-cell>{{ a.adm_date }}</td>
                                 <td md-cell>{{ a.adm_time }}</td>

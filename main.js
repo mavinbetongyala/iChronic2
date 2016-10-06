@@ -21,8 +21,8 @@ let mainWindow;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    // width: 1024,
-    // height: 680,
+    width: 1124,
+    height: 680,
     frame: false,
     titleBarStyle: 'hidden',
     // maximizable: true,
@@ -34,7 +34,7 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
-  mainWindow.maximize();
+  // mainWindow.maximize();
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -91,25 +91,25 @@ function createWindow() {
   fse.ensureDirSync(appPath);
   fse.ensureDirSync(exportPath);
 
-  // fs.access(configFile, fs.W_OK && fs.R_OK, (err) => {
-  //   if (err) {
-  //     let defaultConfig = {
-  //       hosxp: {
-  //         host: '127.0.0.1',
-  //         database: 'hos',
-  //         port: 3306,
-  //         user: 'sa',
-  //         password: '123456'
-  //       },
+  fs.access(configFile, fs.W_OK && fs.R_OK, (err) => {
+    if (err) {
+      let defaultConfig = {
+        hosxp: {
+          host: '127.0.0.1',
+          database: 'hos',
+          port: 3306,
+          user: 'sa',
+          password: '123456'
+        },
 
-  //       url: 'http://localhost:3000',
-  //       key: 'aaf891ddefffa0914b4d17e701cf5bd493ec2504'
-  //     };
+        url: 'http://localhost:3000',
+        key: 'aaf891ddefffa0914b4d17e701cf5bd493ec2504'
+      };
 
-  //     fse.writeJsonSync(configFile, defaultConfig);
-
-  //   }
-  // });
+      fse.writeJsonSync(configFile, defaultConfig);
+      app.quit();
+    }
+  });
 
 }
 

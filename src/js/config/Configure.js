@@ -36,7 +36,7 @@ angular.module('app.config.Configure', [])
             };
 
             fse.writeJsonSync(configFile, defaultConfig);
-
+            // ipcRenderer.sendSync('exit-app');
           }
 
         });
